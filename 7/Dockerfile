@@ -3,8 +3,10 @@ LABEL maintainer="marco.miglierina@contentwise.tv"
 
 ARG GOSU_VERSION=1.10
 
-RUN yum update && yum -y install epel-release && \
-    yum install -y \
+RUN yum -y --setopt=tsflags=nodocs update && \
+    yum -y --setopt=tsflags=nodocs install \
+        epel-release && \
+    yum -y --setopt=tsflags=nodocs install \
         dpkg && \
     yum clean all
 
@@ -21,11 +23,3 @@ RUN curl -o /usr/local/bin/gosu -SL "https://github.com/tianon/gosu/releases/dow
     && gpg --verify /usr/local/bin/gosu.asc \
     && rm -r /usr/local/bin/gosu.asc \
     && chmod +x /usr/local/bin/gosu
-
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-
-ENV HOME=/home/user
-RUN mkdir -p $HOME
-
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["echo","-e","Example usage:\n\n\tdocker run --rm -e LOCAL_USER_ID=`id -u` contentwisetv/centos-gosu id -u\n"]
