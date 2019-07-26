@@ -1,7 +1,7 @@
 FROM centos:7
 LABEL maintainer="marco.miglierina@contentwise.tv"
 
-ARG GOSU_VERSION=1.10
+ARG GOSU_VERSION=1.11
 
 RUN yum -y --setopt=tsflags=nodocs update && \
     yum -y --setopt=tsflags=nodocs install \
